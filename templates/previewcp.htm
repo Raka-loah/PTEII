@@ -1,0 +1,14 @@
+<div class="box" id="output" hx-swap-oob="true">
+  <p>按照当前的输出格式，最终的输出长这样：</p>
+  <p><strong>{{op}}</strong></p>
+</div>
+{% if match_dict %}
+<p>按照当前的捕获格式，得到的数据长这样：</p>
+<ul>
+{% for k, v in match_dict.items() %}
+<li>%{{ k }}% = {{ v }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>按照当前的捕获格式，未匹配到任何内容。</p>
+{% endif %}

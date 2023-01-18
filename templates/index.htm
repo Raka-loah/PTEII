@@ -1,0 +1,40 @@
+{% extends "framework.htm" %}
+{% block body %}
+<section class="section">
+  <div class="container">
+    <h1 class="title">
+      当前系统中所有窗口标题
+    </h1>
+    {% if cfg.hwnd != 0 %}
+    <p>当前已选的窗口句柄：<a href="/sethwnd/{{cfg.hwnd}}">{{cfg.hwnd}}</a> 标题：{{title}}</p>
+    {% endif %}
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <table class="table is-fullwidth is-striped is-hoverable">
+      <thead>
+        <tr>
+          <th>窗口句柄hWnd</th>
+          <th>窗口标题</th>
+          <th>对应进程pid</th>
+          <th>进程名称</th>
+        </tr>
+      </thead>
+      <div class="field is-grouped">
+        <p class="control">
+          <input class="input" type="search" hx-post="/search/" hx-trigger="keyup changed delay:250ms, search, load" hx-target="#tbody" name="filter" id="filter" placeholder="筛选" value="{{cfg.filter}}">
+        </p>
+        <p class="control">
+          <a class="button is-info" hx-post="/search/" hx-target="#tbody" hx-include="#filter">
+            刷新窗口标题
+          </a>
+        </p>
+      </div>
+      <tbody id="tbody">
+        <!-- WINDOW TITLE TABLE GOES HERE-->
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

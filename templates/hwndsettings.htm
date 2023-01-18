@@ -1,0 +1,51 @@
+{% extends "framework.htm" %}
+{% block body %}
+<section class="section">
+  <div class="container">
+    <h1 class="title">
+      设置窗口标题捕获格式
+    </h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="box">
+      <p>当前选中的窗口句柄：<strong>{{ hwnd }}</strong> <a href="/">重选</a><br>它的标题长这样：</p>
+      <p><strong>{{ ctx.title }}</strong></p>
+      <input id="title" name="title" type="hidden" value="{{ ctx.title }}">
+    </div>
+    <div class="field">
+      <label class="label">捕获格式</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="" value="{{cfg.capture_format}}" name="cp" id="cp" hx-trigger="keyup changed delay:500ms, load" hx-post="/previewcp" hx-target="#cgs" hx-include="#title">
+      </div>
+    </div>
+    <div class="box" id="cgs">
+      <p>按照当前的捕获格式，未匹配到任何内容。</p>
+    </div>
+    <div class="field">
+      <label class="label">输出格式</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="" value="{{cfg.output_format}}" name="op" id="op" hx-trigger="keyup changed delay:500ms, load" hx-post="/previewop" hx-target="#output" hx-include="#title">
+      </div>
+    </div>
+    <div class="box" id="output">
+      <p>按照当前的输出格式，最终的输出长这样：</p>
+      <p><strong>{{cfg.output_format}}</strong></p>
+    </div>
+    <form action="/save" method="POST">
+      <div class="field">
+        <label class="checkbox">
+          <input type="checkbox" name="txt"{% if cfg.txt %} checked{% endif %}>
+          开启文本输出（本程序目录中生成music_title.txt）
+        </label>
+      </div>
+      <div class="field is-grouped">
+        <div class="control">
+          <button type="submit" class="button is-link">提交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

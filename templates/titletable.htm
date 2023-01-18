@@ -1,0 +1,16 @@
+{% for datum in ctx %}
+<tr>
+  <td>
+    <a href="/sethwnd/{{ datum.hwnd }}">{{ datum.hwnd }}</a>
+  </td>
+  <td>
+    {{ datum.title }}
+  </td>
+  <td>
+    {{ datum.pid }}
+  </td>
+  <td>
+    {{ datum.process }}
+  </td>
+</tr>
+{% endfor %}
