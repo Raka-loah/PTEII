@@ -4,6 +4,7 @@ import functions
 import os
 import json
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers import interval
 import argparse
 
 ap = argparse.ArgumentParser()
@@ -123,7 +124,8 @@ def output_to_txt_file():
     with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'music_title.txt'), 'w+', encoding='utf8') as fp:
         fp.write(output)
 
-bs.add_job(output_to_txt_file, 'interval', seconds=config['txt_interval'], misfire_grace_time=5)
+bs_trigger = interval.IntervalTrigger(seconds=int(config['txt_interval']))
+bs.add_job(output_to_txt_file, trigger=bs_trigger, misfire_grace_time=5)
 
 @app.route('/save', methods = ['POST'])
 def save_config():
