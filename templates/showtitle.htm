@@ -1,9 +1,5 @@
 {% extends 'framework.htm' %}
-{% block head%}
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Process Title Exctractor II</title>
-<script src="/static/htmx.min.js"></script>
+{% block headcss %}
 {% endblock %}
 {% block body %}
 <div hx-trigger="load, every 1s" hx-get="/titletext">

@@ -1,2 +1,6 @@
 <p>按照当前的输出格式，最终的输出长这样：</p>
+{% if op %}
 <p><strong>{{op}}</strong></p>
+{% else %}
+<p><span class="tag is-danger">无任何输出内容，你可能需要修改捕获格式</span></p>
+{% endif %}

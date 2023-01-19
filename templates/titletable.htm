@@ -1,4 +1,4 @@
-{% for datum in ctx %}
+{% for datum in ctx|sort(attribute="process,pid,hwnd") %}
 <tr>
   <td>
     <a href="/sethwnd/{{ datum.hwnd }}">{{ datum.hwnd }}</a>

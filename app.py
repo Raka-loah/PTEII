@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-from functions import get_all_window_titles, get_window_text, match_title
+from functions import get_all_window_titles, get_window_text, match_title, get_window_process_name
+import functions
 import os
 import json
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -36,12 +37,14 @@ print(f'\n请访问 http://127.0.0.1:{args.port or 14514} 打开设置界面')
 
 @app.route('/')
 def index():
+    hwnd = config['hwnd']
     title = ''
-    if config['hwnd'] != 0:
-        try:
-            title = get_window_text(config['hwnd'])
-        except:
+    if hwnd != 0:
+        process_name, _ = get_window_process_name(hwnd)
+        if process_name in functions.ignore_process_list:
             config['hwnd'] = 0
+        else:
+            title = get_window_text(hwnd)
     return render_template('index.htm', cfg=config, title=title)
 
 @app.route('/search/', methods = ['GET', 'POST'])
@@ -125,24 +128,23 @@ bs.add_job(output_to_txt_file, 'interval', seconds=config['txt_interval'], misfi
 @app.route('/save', methods = ['POST'])
 def save_config():
     global bs
-    txt = request.form.get('txt')
-    config['txt'] = True if txt == 'on' else False
+    if config['hwnd'] != 0:
+        txt = request.form.get('txt', '')
+        config['txt'] = True if txt == 'on' else False
 
-    if config['txt']:
-        try:
-            bs.start()
-        except:
-            pass
-    else:
-        try:
-            bs.shutdown()
-        except:
-            pass
+        if config['txt']:
+            if not bs.running:
+                bs.start()
+        else:
+            with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'music_title.txt'), 'w+', encoding='utf8') as fp:
+                fp.write('')
+            if bs.running:
+                bs.shutdown()
 
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json'), 'w+', encoding='utf8') as fp:
-        json.dump(config, fp, ensure_ascii=False)
+        with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.json'), 'w+', encoding='utf8') as fp:
+            json.dump(config, fp, ensure_ascii=False)
 
-    return render_template('save.htm')
+    return render_template('save.htm', cfg=config)
 
 if __name__ == '__main__':
     app.run(port=args.port or 14514)

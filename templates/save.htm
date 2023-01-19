@@ -9,11 +9,21 @@
 </section>
 <section class="section">
   <div class="container">
-    <article class="message is-primary">
+    {% if cfg.hwnd == 0 %}
+    <article class="message is-danger">
       <div class="message-body">
-        你现在可以<a href="/title">点击此处预览</a>，之后将预览网页的网址添加为OBS的“浏览器”源即可。
+        <p>有点儿不对劲，要么程序出错了，要么你做了一个奇妙的操作？</p>
+        <p>不管怎样，你现在都该<a href="/">点此返回首页</a>重试一下。</p>
       </div>
     </article>
+    {% else %}
+    <article class="message is-primary">
+      <div class="message-body">
+        <p>你现在可以<a href="/title">点击此处预览</a>，之后将预览网页的网址添加为OBS的“浏览器”源即可。<em>有可能什么都看不到因为字是白色的，全选反色一下试试。</em></p>
+        <p>你也可以<a href="/sethwnd/{{cfg.hwnd}}">点此返回设置页面</a>。</p>
+      </div>
+    </article>
+    {% endif %}
   </div>
 </section>
 {% endblock %}

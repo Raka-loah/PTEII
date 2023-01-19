@@ -24,14 +24,13 @@
       <p>按照当前的捕获格式，未匹配到任何内容。</p>
     </div>
     <div class="field">
-      <label class="label">输出格式</label>
+      <label class="label" title="开头的半角空格可能会被网页端忽略，请使用全角空格">输出格式</label>
       <div class="control">
-        <input class="input" type="text" placeholder="" value="{{cfg.output_format}}" name="op" id="op" hx-trigger="keyup changed delay:500ms, load" hx-post="/previewop" hx-target="#output" hx-include="#title">
+        <input class="input" type="text" placeholder="" value="{{cfg.output_format}}" name="op" id="op" hx-trigger="keyup changed delay:500ms" hx-post="/previewop" hx-target="#output" hx-include="#title">
       </div>
     </div>
     <div class="box" id="output">
       <p>按照当前的输出格式，最终的输出长这样：</p>
-      <p><strong>{{cfg.output_format}}</strong></p>
     </div>
     <form action="/save" method="POST">
       <div class="field">

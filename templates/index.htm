@@ -7,6 +7,8 @@
     </h1>
     {% if cfg.hwnd != 0 %}
     <p>当前已选的窗口句柄：<a href="/sethwnd/{{cfg.hwnd}}">{{cfg.hwnd}}</a> 标题：{{title}}</p>
+    {% else %}
+    <p>点击选择需要捕获标题的窗口句柄，也可以先在筛选框中输入内容进行筛选。</p>
     {% endif %}
   </div>
 </section>

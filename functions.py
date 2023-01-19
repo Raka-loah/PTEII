@@ -22,7 +22,7 @@ user32.GetWindowTextW.argtypes = [
     wintypes.LPWSTR,
     ctypes.c_int]
 
-ignore_process_list = ['', 'svchost.exe', 'explorer.exe', 'dwm.exe']
+ignore_process_list = ['', 'svchost.exe', 'explorer.exe', 'dwm.exe', 'System Idle Process']
 ignore_title_list = ["''", "'Default IME'", "'MSCTFIME UI'"]
 
 window_titles = []
@@ -33,19 +33,23 @@ def get_window_text(hwnd):
     user32.GetWindowTextW(hwnd, buffer, length)
     return repr(buffer.value)
 
-def worker(hwnd, lParam):
-    title = get_window_text(hwnd)
+def get_window_process_name(hwnd):
     pid = wintypes.DWORD()
     ctypes.windll.user32.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
     try:
         window_process = psutil.Process(pid.value).name()
     except psutil.NoSuchProcess:
         window_process = ''
+    return window_process, pid.value
+
+def worker(hwnd, lParam):
+    title = get_window_text(hwnd)
+    window_process, pid = get_window_process_name(hwnd)
     if window_process not in ignore_process_list and title not in ignore_title_list:
         window_titles.append({
             'hwnd': hwnd,
             'title': title[1:-1],
-            'pid': pid.value,
+            'pid': pid,
             'process': window_process,
         })
     return True
