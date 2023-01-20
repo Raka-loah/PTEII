@@ -2,6 +2,8 @@
 {% block headcss %}
 {% endblock %}
 {% block body %}
-<div hx-trigger="load, every 1s" hx-get="/titletext">
+<div hx-ext="morph">
+    <div hx-trigger="load, every 1s" hx-get="/titletext" hx-swap="morph:innerHTML" class="content">
+    </div>
 </div>
 {% endblock %}

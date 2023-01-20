@@ -64,7 +64,8 @@ def get_title():
         try:
             title = get_window_text(config['hwnd'])[1:-1]
             output = output_title(title)
-            return render_template('title.htm', op=output)
+            title_hash = abs(hash(title)) % (10 ** 8)
+            return render_template('title.htm', op=output, id=title_hash)
         except:
             return '', 404
     return '', 400

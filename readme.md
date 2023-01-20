@@ -1,4 +1,4 @@
-# [WIP]将网易云音乐歌名输出到OBS v2
+# 将网易云音乐歌名输出到OBS v2
 
 [![](https://img.shields.io/github/issues/Raka-loah/PTEII.svg)](https://github.com/Raka-loah/PTEII/issues)
 ![](https://img.shields.io/github/stars/Raka-loah/PTEII.svg)
@@ -7,7 +7,7 @@
 **警告**
 ----
 
-未完工，不保证能用
+勉强能用，不保证没重大bug
 
 **前置条件**
 --------
@@ -28,3 +28,7 @@ pip install apscheduler argparser flask
 3. 进入浏览器设置页面，按句柄选择对应的窗口；
 4. 设置捕获格式和输出格式，以及是否输出文本文件；
 5. OBS添加浏览器源，如果选择输出文本文件，则添加文字源。
+
+## 一键包
+
+Release中是使用[Nuitka](https://github.com/Nuitka/Nuitka)编译打包的版本，下载后开袋即食，解压双击 ``app.exe``即可。
