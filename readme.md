@@ -32,3 +32,7 @@ pip install apscheduler argparser flask
 ## 一键包
 
 Release中是使用[Nuitka](https://github.com/Nuitka/Nuitka)编译打包的版本，下载后开袋即食，解压双击 ``app.exe``即可。
+
+## 更多信息
+
+参考我的网站好了：[https://lotc.cc/pteii.wtf](https://lotc.cc/pteii.wtf)
